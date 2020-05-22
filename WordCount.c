@@ -1,68 +1,32 @@
-#include<stdio.h>
-int chc(char file[])
+#include <stdio.h>
+int main(int argc, char *argv[])
 {
-	FILE *fp=NULL;
-	int str = 0;
-	fp=fopen(file,"r");
-	if (fp==NULL)
+	char ch[200];             //字符数组
+	int i = 0;
+	int word = 0;//单词数 
+	int str =0;//字符数 
+	FILE *fp;
+	fp = fopen("D:\\file.txt", "r");
+	if (fp == NULL) 
 	{
 		printf("没有检测到文件\n");
-			return;
 	}
-	char ch;
-	ch = fgetc(fp);
-		while (ch != EOF)
-		{
-			ch = fgetc(fp);
-				str++;
-		}
-	fclose(fp);
-	return str;
-}
-int wdc(char file[])
-{
-	FILE *fp=NULL;
-	int word = 0;
-	fp=fopen(file,"r");
-	if (fp==NULL)
+	ch[i]=fgetc(fp);
+	while (ch[i]!= EOF) //读取数据到数组，直到文件结尾
 	{
-		printf("没有检测到文件\n");
-		return;
-	}
-	char ch;
-	ch = fgetc(fp);
-	while (ch != EOF) {
-		if (ch == ' ' || ch == ',')
-		{
+		i++;
+		if (ch[i] == ' ' || ch[i] == ',' || ch[i] == '\n')
 			word++;
-			ch = fgetc(fp);
-		}
-		fclose(fp);
-		return word;
 	}
-}
-int main()
-{
-	char input[20];
-	char File[100];
-	while (1)
+	fclose(fp);//关闭文件
+	if (strcmp(argv[1], "-c") == 0)
 	{
-		scanf("%s", &input);
-		scanf("%s",&File);
-		
-		if (input=="-c") {
-			int str = 0;
-			str = chc(File);
-			printf("字符数：%d\n", str);
-			continue;
-		}
-		else if(input== "-w") {
-			int wd=0;
-			wd = wdc(File);
-			printf("单词数：%d\n",wd);
-			continue;
-		}
+		printf("字符数：%d", i);
 	}
-	system("pause");
+	else if(strcmp(argv[1], "-w") == 0)
+	{
+		printf("单词数:%d\n", word+1);
+	}
 	return 0;
 }
+
